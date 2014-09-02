@@ -8,6 +8,8 @@ node default {
 
 node 'ubuntu' inherits default {
 
-    include nginx
+    class { 'nginx':
+        version => '1.6.0-1+trusty0'
+    }
 
 }
