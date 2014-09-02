@@ -9,9 +9,14 @@ class nginx::config {
         ensure  => directory,
     }
 
+    tidy { "/var/www/${cat_site}":
+        recurse => true,
+        require => File["/var/www/${cat_site}"]
+    }
+
     file { "/var/www/${cat_site}/index.html":
         source  => 'puppet:///modules/nginx/index.html',
-        require => File["/var/www/${cat_site}"],
+        require => Tidy["/var/www/${cat_site}"],
     }
 
     file { '/etc/nginx/sites-enabled/default':
