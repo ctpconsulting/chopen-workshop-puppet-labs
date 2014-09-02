@@ -4,5 +4,6 @@
 class nginx {
 
     include nginx::service
+    include nginx::config
 
 }
