@@ -3,19 +3,29 @@
 #
 class nginx::config {
 
-    file { ['/var/www', '/var/www/cat-pictures']:
+    $cat_site = 'cat-pictures'
+
+    file { '/var/www':
         ensure  => directory,
     }
 
-    file { '/var/www/cat-pictures/index.html':
+    file { "/var/www/${cat_site}/index.html":
         source  => 'puppet:///modules/nginx/index.html',
-        require => File['/var/www/cat-pictures'],
+        require => File["/var/www/${cat_site}"],
     }
 
     file { '/etc/nginx/sites-enabled/default':
-        source  => 'puppet:///modules/nginx/cat-pictures.conf',
+        ensure  => absent,
         notify  => Service['nginx'],
-        require => [ Package['nginx'], File['/var/www/cat-pictures'] ]
+    }
+
+    file { '/etc/nginx/sites-available/default':
+        ensure  => absent,
+        notify  => Service['nginx'],
+    }
+
+    nginx::vhost { $cat_site:
+        port    => 80,
     }
 
 }
