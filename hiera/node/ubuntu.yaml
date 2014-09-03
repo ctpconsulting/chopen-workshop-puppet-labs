@@ -1,0 +1,3 @@
+---
+nginx::mysql_password: test
+test: test
