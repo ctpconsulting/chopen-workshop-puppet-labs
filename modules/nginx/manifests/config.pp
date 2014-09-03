@@ -20,17 +20,17 @@ class nginx::config {
     }
 
     file { '/etc/nginx/sites-enabled/default':
-        ensure  => absent,
-        notify  => Service['nginx'],
+        ensure => absent,
+        notify => Service['nginx'],
     }
 
     file { '/etc/nginx/sites-available/default':
-        ensure  => absent,
-        notify  => Service['nginx'],
+        ensure => absent,
+        notify => Service['nginx'],
     }
 
     nginx::vhost { $cat_site:
-        port    => 80,
+        port => 80,
     }
 
 }
