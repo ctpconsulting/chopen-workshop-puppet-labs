@@ -2,8 +2,16 @@
 #
 #
 class nginx(
-    $version = undef
-) {
+
+    $version = undef,
+    $mysql_user = $nginx::params::mysql_user,
+    $mysql_password = undef
+
+) inherits nginx::params {
+
+    if ($mysql_password == undef) {
+        fail('MySQL DB password must be set!')
+    }
 
     include nginx::service
     include nginx::config
@@ -13,8 +21,8 @@ class nginx(
     }
 
     mysql::db { 'chopen':
-        user     => 'chopen',
-        password => 'chopen',
+        user     => $mysql_user,
+        password => $mysql_password,
         host     => 'localhost',
         grant    => ['SELECT', 'UPDATE'],
     }
