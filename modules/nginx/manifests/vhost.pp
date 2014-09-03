@@ -2,7 +2,7 @@
 # Parameters:
 # arguments
 #
-define nginx::vhost ($site_name = $title, $port) {
+define nginx::vhost ($port, $site_name = $title) {
 
     $site_server = "${site_name}.com"
 
